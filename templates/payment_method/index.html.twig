@@ -5,31 +5,17 @@
 {% block body %}
     <h1>PaymentMethod index</h1>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for payment_method in payment_methods %}
-            <tr>
-                <td>{{ payment_method.id }}</td>
-                <td>{{ payment_method.name }}</td>
-                <td>
-                    <a href="{{ path('app_payment_method_show', {'id': payment_method.id}) }}">show</a>
-                    <a href="{{ path('app_payment_method_edit', {'id': payment_method.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="3">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+  <a href="{{ path('app_payment_method_new')}} "Creer un mode de paiement</a>
 
-    <a href="{{ path('app_payment_method_new') }}">Create new</a>
+  <ul>
+  {% for method in paymentMethods %}
+    <li>
+        {{method.name}}
+        <a href="{{ path('payment_method_delete', {id:method.id} )}} "Supprimer"</a>
+    </li>
+
+    {%else%}
+    <li> Aucun mode de paiement trouvé.</li>
+    {%endfor%}
+    </ul>
 {% endblock %}
