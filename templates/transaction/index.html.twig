@@ -5,29 +5,24 @@
 {% block body %}
     <h1>Transaction index</h1>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for transaction in transactions %}
-            <tr>
-                <td>{{ transaction.id }}</td>
-                <td>
-                    <a href="{{ path('app_transaction_show', {'id': transaction.id}) }}">show</a>
-                    <a href="{{ path('app_transaction_edit', {'id': transaction.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="2">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+<a href="{{ path('transaction_new')}}"> Creer une transaction</a>
 
-    <a href="{{ path('app_transaction_new') }}">Create new</a>
-{% endblock %}
+<ul>
+{% for transaction in transactions %}
+    <li>
+        {{ transaction.date|date ('d/m/Y') }} - {{ transaction.amount }} 
+        -Catégories: 
+        {% for cat in transaction.categories %}
+            {{cat.name}} {% if not loop.last %}, {% endif%}
+        {% endfor%}
+        <a href="{{ path('transaction_show', {'id':transaction.id})}}"Voir</a>
+        <a href="{{ path('transaction_edit', {'id':transaction.id})}}"Modifié</a>
+        <a href="{{ path('transaction_delete', {'id':transaction.id})}}"Supprimer</a>
+
+    </li>
+
+    {%else%}
+        <li> Aucune transaction trouvée. </li>
+    {%endfor%}
+    </ul>
+    {% endblock %}
